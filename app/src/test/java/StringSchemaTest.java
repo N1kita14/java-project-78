@@ -1,6 +1,5 @@
-//package hexlet.code;
-
-import hexlet.code.schemas.StringSchema;
+import hexlet.code.Validator;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -8,36 +7,47 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class StringSchemaTest {
 
-    @Test
-    void requiredTest() {
-        var schema = new StringSchema();
-        assertTrue(schema.isValid(null));
-        assertFalse(schema.required().isValid(null));
-        assertFalse(schema.required().isValid(""));
+    private static Validator v;
+
+    @BeforeAll
+    static void beforeAll() {
+        v = new Validator();
     }
 
     @Test
-    void minLengthTest() {
-        var schema = new StringSchema();
-        assertTrue(schema.minLength(10).isValid("what does the fox say"));
-        assertFalse(schema.minLength(10).isValid("Hexlet"));
-        assertTrue(schema.minLength(5).isValid(null));
+    void stringSchemaTest1() {
+        var schema = v.string();
+
+        assertTrue(schema.isValid("")); // true
+        assertTrue(schema.isValid(null)); // true
+
+        schema.required();
+
+        assertFalse(schema.isValid(null)); // false
+        assertFalse(schema.isValid("")); // false
+        assertTrue(schema.isValid("what does the fox say")); // true
+        assertTrue(schema.isValid("hexlet")); // true
+
+        assertTrue(schema.contains("wh").isValid("what does the fox say")); // true
+        assertTrue(schema.contains("what").isValid("what does the fox say")); // true
+        assertFalse(schema.contains("whatthe").isValid("what does the fox say")); // false
+
+        assertFalse(schema.isValid("what does the fox say")); // false
+
+        var schema1 = v.string();
+        assertTrue(schema1.minLength(10).minLength(4).isValid("Hexlet")); // true
     }
 
     @Test
-    void containsTest() {
-        var schema = new StringSchema();
-        assertTrue(schema.contains("wh").isValid("what does the fox say"));
-        assertFalse(schema.contains("whatthe").isValid("what does the fox say"));
-        assertTrue(schema.contains("wh").isValid(null));
-    }
+    void stringSchemaTest2() {
+        var schema = v.string();
 
-    @Test
-    void stringTest() {
-        var schema = new StringSchema();
-        assertTrue(schema.required().minLength(10).contains("wh").isValid("what does the fox say"));
-        assertFalse(schema.required().minLength(10).contains("whatthe").isValid("what does the fox say"));
-        assertTrue(schema.minLength(5).contains("Hex").isValid("Hexlet"));
-        assertFalse(schema.required().minLength(10).isValid("Hexlet"));
+        assertTrue(schema.isValid(null)); // true
+        schema.minLength(2);
+        assertTrue(schema.isValid(null)); // true
+        schema.contains("abc");
+        assertTrue(schema.isValid(null)); // true
+        schema.required();
+        assertFalse(schema.isValid(null)); // false
     }
 }
