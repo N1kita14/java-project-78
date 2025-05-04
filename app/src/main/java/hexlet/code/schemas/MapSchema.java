@@ -9,10 +9,12 @@ public final class MapSchema extends BaseSchema<Map<?, ?>> {
         addValidation("required", Objects::nonNull);
         return this;
     }
+
     public MapSchema sizeof(int size) {
         addValidation("sizeof", map -> map.size() == size);
         return this;
     }
+
     public MapSchema shape(Map<String, BaseSchema<String>> schemas) {
         addValidation(
                 "shape", map -> {

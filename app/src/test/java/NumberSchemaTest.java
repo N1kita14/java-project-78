@@ -39,6 +39,7 @@ class NumberSchemaTest {
         assertFalse(schema.isValid(12));
         assertTrue(schema.isValid(null));
     }
+
     @Test
     void numberTest() {
         var schema = new NumberSchema();

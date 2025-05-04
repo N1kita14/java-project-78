@@ -31,6 +31,7 @@ class StringSchemaTest {
         assertFalse(schema.contains("whatthe").isValid("what does the fox say"));
         assertTrue(schema.contains("wh").isValid(null));
     }
+
     @Test
     void stringTest() {
         var schema = new StringSchema();

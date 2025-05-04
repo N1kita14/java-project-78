@@ -35,6 +35,7 @@ class MapSchemaTest {
         data.put("key2", "value2");
         assertTrue(schema.isValid(data));
     }
+
     @Test
     void shapeTest() {
         var v = new Validator();
