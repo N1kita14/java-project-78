@@ -1,4 +1,4 @@
-package hexlet.code;
+//package hexlet.code;
 
 import hexlet.code.schemas.StringSchema;
 import org.junit.jupiter.api.Test;
