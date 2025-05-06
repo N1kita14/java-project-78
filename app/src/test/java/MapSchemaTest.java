@@ -69,7 +69,7 @@ class MapSchemaTest {
         Map<String, String> data2 = new HashMap<>();
         data2.put("firstName", "John");
         data2.put("lastName", null);
-        assertTrue(schema.isValid(data2)); // true fixed this 11
+        assertTrue(schema.isValid(data2)); // true fixed this
 
         Map<String, String> data3 = new HashMap<>();
         data3.put("firstName", "Anna");

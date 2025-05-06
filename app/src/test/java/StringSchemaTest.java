@@ -48,6 +48,6 @@ class StringSchemaTest {
         schema.contains("abc");
         assertTrue(schema.isValid(null)); // true
         schema.required();
-        assertTrue(schema.isValid(null)); // true fixed this 11
+        assertTrue(schema.isValid(null)); // true fixed this
     }
 }
