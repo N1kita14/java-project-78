@@ -22,58 +22,64 @@ class MapSchemaTest {
     void mapSchemaTest1() {
         var schema = v.map();
 
-        assertTrue(schema.isValid(null)); // true
+        assertTrue(schema.isValid(null));
 
         schema.required();
 
-        assertFalse(schema.isValid(null)); // false
-        assertTrue(schema.isValid(new HashMap<>())); // true
-
-        var data = new HashMap<String, String>();
-
-        data.put("key1", "value1");
-        assertTrue(schema.isValid(data)); // true
+        assertFalse(schema.isValid(null));
+        assertTrue(schema.isValid(new HashMap<>()));
+        assertTrue(schema.isValid(Map.of("key", "value")));
 
         schema.sizeof(2);
 
-        assertFalse(schema.isValid(data)); // false
-        data.put("key2", "value2");
-        assertTrue(schema.isValid(data)); // true
+        assertFalse(schema.isValid(Map.of("k1", "v1")));  // size 1
+        assertTrue(schema.isValid(Map.of("k1", "v1", "k2", "v2")));  // size 2
     }
 
     @Test
     void mapSchemaTest2() {
         var schema = v.map();
 
-        assertTrue(schema.isValid(null)); // true
+        assertTrue(schema.isValid(null));
+
         schema.sizeof(2);
-        assertTrue(schema.isValid(null)); // true fixed this
+        assertFalse(schema.isValid(null));
+
         schema.required();
-        assertFalse(schema.isValid(null)); // false
+        assertFalse(schema.isValid(null));
     }
 
     @Test
     void mapSchemaTest3() {
-
         Map<String, BaseSchema<String>> schemas = new HashMap<>();
         schemas.put("firstName", v.string().required());
         schemas.put("lastName", v.string().required().minLength(2));
 
-        var schema = v.map().sizeof(2).shape(schemas);
+        var schema = v.map()
+                .sizeof(2)
+                .shape(schemas);
 
-        Map<String, String> data1 = new HashMap<>();
-        data1.put("firstName", "John");
-        data1.put("lastName", "Smith");
-        assertTrue(schema.isValid(data1)); // true
+        Map<String, String> validData = Map.of(
+                "firstName", "John",
+                "lastName", "Doe"
+        );
+        assertTrue(schema.isValid(validData));
 
-        Map<String, String> data2 = new HashMap<>();
-        data2.put("firstName", "John");
-        data2.put("lastName", null);
-        assertTrue(schema.isValid(data2)); // true fixed this
+        Map<String, String> invalidLastName = Map.of(
+                "firstName", "John",
+                "lastName", null
+        );
+        assertFalse(schema.isValid(invalidLastName));
 
-        Map<String, String> data3 = new HashMap<>();
-        data3.put("firstName", "Anna");
-        data3.put("lastName", "B");
-        assertFalse(schema.isValid(data3)); // false
+        Map<String, String> shortLastName = Map.of(
+                "firstName", "Anna",
+                "lastName", "B"
+        );
+        assertFalse(schema.isValid(shortLastName));
+
+        Map<String, String> missingKey = Map.of(
+                "firstName", "Alice"
+        );
+        assertFalse(schema.isValid(missingKey));
     }
 }
