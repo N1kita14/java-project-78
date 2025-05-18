@@ -1,7 +1,7 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/N1kita14/java-project-78/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/N1kita14/java-project-78/actions)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=N1kita14_java-project-78&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=N1kita14_java-project-78)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=N1kita14_java-project-78&metric=coverage)](https://sonarcloud.io/summary/new_code?id=N1kita14_java-project-78)
-[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=N1kita14_java-project-78)](https://sonarcloud.io/summary/new_code?id=N1kita14_java-project-78)
 
 ## Описание
 Валидатор данных – библиотека, с помощью которой можно проверять корректность данных.
