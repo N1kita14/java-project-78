@@ -15,17 +15,26 @@ public abstract class BaseSchema<T> {
     }
 
     public boolean isValid(T value) {
-        if (!required) {
+        if (required) {
             var checkNull = addValidation.get("checkNull");
-            if (!checkNull.test(value)) {
+            if (checkNull != null && !checkNull.test(value)) {
+                return false;
+            }
+        } else {
+            var checkNull = addValidation.get("checkNull");
+            if (checkNull != null && !checkNull.test(value)) {
                 return true;
             }
         }
-        for (var check : addValidation.values()) {
-            if (!check.test(value)) {
-                return false;
+
+        for (var entry : addValidation.entrySet()) {
+            if (!entry.getKey().equals("checkNull")) {
+                if (!entry.getValue().test(value)) {
+                    return false;
+                }
             }
         }
+
         return true;
     }
 }
