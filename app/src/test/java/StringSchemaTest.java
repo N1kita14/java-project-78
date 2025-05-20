@@ -23,7 +23,7 @@ class StringSchemaTest {
 
         schema.required();
 
-        assertTrue(schema.isValid(null)); // true fixed this
+        assertFalse(schema.isValid(null)); // false
         assertFalse(schema.isValid("")); // false
         assertTrue(schema.isValid("what does the fox say")); // true
         assertTrue(schema.isValid("hexlet")); // true
@@ -48,6 +48,6 @@ class StringSchemaTest {
         schema.contains("abc");
         assertTrue(schema.isValid(null)); // true
         schema.required();
-        assertTrue(schema.isValid(null)); // true fixed this
+        assertFalse(schema.isValid(null)); // false
     }
 }
