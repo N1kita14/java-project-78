@@ -14,7 +14,7 @@ public abstract class BaseSchema<T> {
         addValidation.put("checkNull", Objects::nonNull);
     }
 
-    public boolean isValid(T value) {
+    public final boolean isValid(T value) {
         if (required) {
             var checkNull = addValidation.get("checkNull");
             if (checkNull != null && !checkNull.test(value)) {
