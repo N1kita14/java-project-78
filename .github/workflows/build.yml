@@ -9,6 +9,11 @@ jobs:
   build:
     - name: Run tests and generate coverage
       run: ./gradlew clean test jacocoTestReport
+
+    - name: Run SonarQube analysis
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: ./gradlew sonar --info
     name: Build and analyze
     runs-on: ubuntu-latest
     steps:
